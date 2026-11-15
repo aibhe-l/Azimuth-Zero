@@ -12,15 +12,14 @@ from dash import dcc, html, Input, Output, State
 app = dash.Dash(__name__)
 app.title = "Azimuth Atlas"
 
-# =====================================================================
-# MODIFIABLE TELEMETRY & INPUT VARIABLES
-# =====================================================================
-uv_level = 9.0          # Set above 8.0 to trigger the solar radiation warning
-MAX_UV = 12.0           # Top of the UV scale
-UV_BAR_HEIGHT = 140     # Height (in px) of assets/uv.jpeg
+# Modifiable perameters
 
-wind_speed = 26         # Set above 25 to trigger the dust storm warning
-wind_direction = 45     # Angle in degrees (0 = N, 90 = E, 180 = S, 270 = W)
+uv_level = 4.0          
+MAX_UV = 10.0          
+UV_BAR_HEIGHT = 140     
+
+wind_speed = 14         
+wind_direction = 0     
 
 # Updated automatically when the user clicks the "Confirm" button
 astro_latitude = None
@@ -68,7 +67,7 @@ app.layout = html.Div([
     dcc.Store(id='wind-direction-store', data=wind_direction),
     dcc.Store(id='uv-level-store', data=uv_level),
 
-    # --- HEADER ---
+    # Header Bar with Logo, App Title, and Dynamic Warning Banner
     html.Div([
 
         # Left Group: Logo and team name
@@ -130,7 +129,7 @@ app.layout = html.Div([
         'zIndex': '10'
     }),
 
-    # --- UPPER LEFT: COORDINATES & RADIUS BOX ---
+    # Upper Left Box: Latitude, Longitude, Radius Inputs + Confirm Button + Location Options
     html.Div([
 
         # Latitude & Longitude Row
@@ -210,7 +209,7 @@ app.layout = html.Div([
             )
         ], style={'display': 'flex', 'marginBottom': '8px'}),
 
-        # Open/Blank Space for Future Location Options
+        # Open space
         html.Div(
             id='location-options-area',
             children=[
@@ -252,8 +251,8 @@ app.layout = html.Div([
         'zIndex': '10'
     }),
 
-    # --- CENTRE BOX (Map Area) ---
-    html.Div([
+    # Centre Box: Map
+   html.Div([
         html.Div(
             id='top-center-box',
             style={
@@ -261,13 +260,24 @@ app.layout = html.Div([
                 'width': '100%',
                 'backgroundColor': '#004d89',
                 'borderRadius': '12px',
-                'padding': '16px',
+                'padding': '0',  
                 'boxSizing': 'border-box',
                 'overflow': 'hidden'
-            }
+            },
+            children=[
+                html.Img(
+                    src='assets/current-map.svg',  
+                    style={
+                        'width': '100%',
+                        'height': '100%',
+                        'objectFit': 'cover',  
+                        'display': 'block'
+                    }
+                )
+            ]
         )
     ], style={
-        'position': 'fixed',
+        'position': 'absolute',
         'top': '84px',
         'bottom': '20px',
         'left': '275px',
@@ -277,7 +287,7 @@ app.layout = html.Div([
         'zIndex': '5'
     }),
 
-    # --- WIND WHEEL + ROTATABLE ARROW ---
+    # Wind wheel with superimposed arrow (rotates based on wind direction)
     html.Div([
         # Background Wheel
         html.Img(src='assets/cardinal-wheel.png', style={
@@ -309,7 +319,7 @@ app.layout = html.Div([
         'zIndex': '10'
     }),
 
-    # --- BOTTOM LEFT: ZOOM ICONS + VARIABLE WIND SPEED BOX ---
+    # Bottom Left Box: Zoom In/Out Buttons + Wind Speed Box
     html.Div([
 
         # Zoom Icons with Transparent Clickable Overlays
@@ -389,7 +399,7 @@ app.layout = html.Div([
         'zIndex': '10'
     }),
 
-    # --- RIGHT SIDE: TWO ICON BOXES + UV LABEL + UV BAR + MARKER ---
+    # Right side vertical stack: Satellite Button, Mountain Button, UV Radiation Colour Bar + Marker
     html.Div([
 
         # Satellite Box + Transparent Button Overlay
@@ -506,10 +516,7 @@ app.layout = html.Div([
     'position': 'relative'
 })
 
-
-# =====================================================================
-# CALLBACKS
-# =====================================================================
+# Callbacks
 
 @app.callback(
     Output('confirmed-inputs-store', 'data'),
