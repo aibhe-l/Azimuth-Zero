@@ -30,7 +30,7 @@ def km_to_degrees(km):
     return lat_radius, lon_radius
 
 
-aerial = True
+aerial = False
 #location of astronaut and desired search radius in km
 lat, lon = -4.58833, 137.44967
 radius = 30
@@ -86,6 +86,7 @@ plt.colorbar(label="Elevation (m)") if not aerial else None
 plt.xlabel("Longitude")
 plt.ylabel("Latitude")
 plt.title("Gale Crater Terrain Elevation - Search Area")
+plt.savefig('plots/search_area.svg')
 plt.show()
 #---------------------------
 
@@ -259,4 +260,5 @@ plt.colorbar(label="Elevation (m)") if not aerial else None
 plt.xlabel("Longitude")
 plt.ylabel("Latitude")
 plt.title("Gale Crater Terrain Elevation - Route")
+plt.savefig('plots/route.svg')
 plt.show()
