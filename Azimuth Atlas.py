@@ -11,12 +11,12 @@ GOLD_HEX = "#cda961"
 BLUE_HEX = "#004d89"
 DARK_BG = "#161621"
 
-uv_level = 4.0          # Hardcoded UV level (0.0 to 10.0; >= 8.0 triggers warning)
+uv_level = 8.0          # Hardcoded UV level (0.0 to 10.0; >= 8.0 triggers warning)
 MAX_UV = 10.0
 UV_BAR_HEIGHT = 120
 
-wind_speed = 14.0       # Hardcoded Wind Speed in m/s (>= 25.0 triggers warning)
-wind_direction = 45.0   # Hardcoded Wind Direction in degrees (0 = N, 90 = E, 180 = S, 270 = W)
+wind_speed = 42.0       # Hardcoded Wind Speed in m/s (>= 25.0 triggers warning)
+wind_direction = 290.0   # Hardcoded Wind Direction in degrees (0 = N, 90 = E, 180 = S, 270 = W)
 
 # Updated automatically when the user clicks the "Confirm" button
 astro_latitude = None
