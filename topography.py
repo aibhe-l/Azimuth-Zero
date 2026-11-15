@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 with rasterio.open("gale_topography_small.tif") as src:
     elevation = src.read(1, masked=True)
     bounds = src.bounds
-print(bounds)
+
 # while True:
 #     print("Astronaut starting position:")
 #     lon = float(input("Longitude: "))
@@ -18,6 +18,8 @@ print(bounds)
 #         break
 
 #plt.scatter(lon, lat, color="red", s=10)
+
+
 
 plt.imshow(
     elevation,
